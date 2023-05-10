@@ -19,50 +19,6 @@ sap.ui.define([
             onPress: function(evt) {
 
                 var oPlayerModel = new JSONModel("../model/player.json");
-
-                // // get the view
-                // var oView = this.getView();
-
-                // // get the data model
-                // var oData = oView.getModel("data");
-                // console.log(oData); 
-
-                // // get the current month
-                // var currentDate = new Date();
-                // var currentMonth = currentDate.getMonth() + 1; // Note: getMonth() returns 0-indexed month
-
-                // var currentYear = currentDate.getFullYear();
-
-                // // construct the filter string to retrieve the results for the current month
-                // var firstDayOfMonth = new Date(currentYear, currentMonth - 1, 1);
-                // var lastDayOfMonth = new Date(currentYear, currentMonth, 0);
-                // var firstWeekOfMonth = Math.ceil((firstDayOfMonth.getDay() + 1 + firstDayOfMonth.getDate()) / 7);
-                // var lastWeekOfMonth = Math.ceil((lastDayOfMonth.getDay() + 1 + lastDayOfMonth.getDate()) / 7);
-                // var filterString = "Week ge " + firstWeekOfMonth + " and Week le " + (firstWeekOfMonth + 3);
-                
-                // // get the current date
-                // var currentDate = new Date();
-
-                // // get the current calendar week of the year
-                // var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern: "ww"});
-                // var currentWeek = oDateFormat.format(currentDate);
-
-                // // log the current calendar week of the year
-                // console.log(currentWeek);
-
-                // // get the start date of the current week
-                // var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern: "yyyy-MM-dd"});
-                // var currentDate = new Date();
-                // var currentWeek = oDateFormat.format(currentDate);
-                // var currentWeekStartDate = new Date(currentWeek);
-                // currentWeekStartDate.setDate(currentWeekStartDate.getDate() - currentWeekStartDate.getDay() + 1); // adjust to Monday
-
-                // // get the month of the start date
-                // var currentMonth = currentWeekStartDate.getMonth() + 1;
-
-                // console.log(currentMonth);
-
-
                 
                 // get the view
                 var oView = this.getView();
@@ -110,6 +66,22 @@ sap.ui.define([
 
                 console.log("Calendar weeks in current month:", weeksInMonth);
 
+                // modify the weeksInMonth array to have the format "2023xx"
+                var formattedWeeks = weeksInMonth.map(function(week) {
+                    // pad the week number with a leading zero if it is a single digit
+                    var paddedWeek = week.padStart(2, '0');
+                    // construct the formatted week string by concatenating the current year and the padded week number
+                    var formattedWeek = currentYear.toString() + paddedWeek;
+                    return formattedWeek;
+                });
+  
+                console.log("Formatted weeks in current month:", formattedWeeks);
+
+                // set the calendar weeks in the JSON model
+                /* var oPlayerModel = this.getView().getModel("player");
+                oPlayerModel.setProperty("/weeksInMonth", weeksInMonth);
+                console.log("Json Werte (neu): ", oPlayerModel.getProperty("/weeksInMonth")); */
+
 
                 // load service data 
                 oData.read("/Results", { 
@@ -127,6 +99,29 @@ sap.ui.define([
                         return result.CurrentWeek;
                       });
                         console.log("Current Week: " + currentWeeks);
+
+                        // compare the values in currentWeeks and formattedWeeks and store the matching values in a new array
+                        var matchingWeeks = currentWeeks.filter(function (week) {
+                            return formattedWeeks.includes(week);
+                        });
+
+                    console.log("Matching Weeks:", matchingWeeks);
+
+                    // get right playername and sumofhearts from service
+                     // store PlayerName and SumOfHearts for matching weeks
+                    var matchingData = [];
+                    for (var i = 0; i < oData.results.length; i++) {
+                        var result = oData.results[i];
+                        if (matchingWeeks.includes(result.CurrentWeek)) {
+                            matchingData.push({
+                                PlayerName: result.PlayerName,
+                                Hearts: result.Hearts
+                            });
+                        }
+                    }
+
+                    console.log("Matching Players:", matchingData);
+
                     },
                     error: function(oError) {
                       //handle error
