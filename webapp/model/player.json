@@ -1,0 +1,31 @@
+{
+    "player":
+        [   {
+                "playername": "Burhan",
+                "week1": "1",
+                "week2": "2",
+                "week3": "3",
+                "week4": "4",
+                "week5": "5"
+            },
+
+            {
+                "playername": "Burhan",
+                "week1": "1",
+                "week2": "2",
+                "week3": "3",
+                "week4": "4",
+                "week5": "5"
+            },
+
+            {
+                "playername": "Burhan",
+                "week1": "1",
+                "week2": "2",
+                "week3": "3",
+                "week4": "4",
+                "week5": "5"
+            }
+
+        ]
+}

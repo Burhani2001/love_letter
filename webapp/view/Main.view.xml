@@ -1,47 +1,52 @@
 <mvc:View controllerName="de.ososoft.llresults.resultsbyweekfreestyle.controller.Main"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns="sap.m">
-    
-	<Table id="idTable"
-		 items="{path: 'data>/ResultsByWeek',
-		 		 sorter: { 	path: 'CurrentWeek',
-				 			group: true } }">
+
+	<Table 
+		id="idTable"
+
+		items="{path: 'player>/player' }">
 		<headerToolbar>
+			
 			<OverflowToolbar>
 				<Title text="Hearts by Weeks"/>
 				<SearchField width="20%"/>
 				<Button tooltip="Sort" icon="sap-icon://sort" />
 				<Button tooltip="Group" icon="sap-icon://group-2" />
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://synchronize" type="Emphasized" press="onPress"/>
 			</OverflowToolbar>
 		</headerToolbar>
+
 		<columns>
 			<Column width="12em">
 				<Text text="Player"/>
 			</Column>
 			<Column width="12em">
-				<Text text="2023/5"/>
+				<Text text="Week 1"/>
 			</Column>
 			<Column width="12em">
-				<Text text="2023/6"/>
+				<Text text="Week 2"/>
 			</Column>
 			<Column width="12em">
-				<Text text="2023/7"/>
+				<Text text="Week 3"/>
 			</Column>
 			<Column width="12em">
-				<Text text="2023/8"/>
-			</Column>
-			<Column width="12em">
-				<Text text="2023/9"/>
-			</Column>
-		</columns>
+				<Text text="Week 4"/> 
+			</Column>			
+		</columns>	
 		<items>
 			<ColumnListItem vAlign="Middle"> 
 				<cells>
-					<ObjectIdentifier title="{data>PlayerName}"/>
-					<Text text="{data>CurrentWeek}"/>
-                    <Text text="{data>SumOfHearts}"/>
+					<ObjectIdentifier title="{player>playername}"/>
+					<Text text="{player>week1}"/>
+                    <Text text="{player>week2}"/>
+					<Text text="{player>week3}"/>
+					<Text text="{player>week4}"/>
 				</cells>
 			</ColumnListItem>
 		</items>
 	</Table>
+
 </mvc:View>
+
